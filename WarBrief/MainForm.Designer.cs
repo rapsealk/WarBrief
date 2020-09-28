@@ -28,13 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.BuildTagLabel = new System.Windows.Forms.Label();
+            this.BuildLabel = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // BuildTagLabel
+            // 
+            this.BuildTagLabel.AutoSize = true;
+            this.BuildTagLabel.Location = new System.Drawing.Point(26, 27);
+            this.BuildTagLabel.Name = "BuildTagLabel";
+            this.BuildTagLabel.Size = new System.Drawing.Size(37, 12);
+            this.BuildTagLabel.TabIndex = 0;
+            this.BuildTagLabel.Text = "Build:";
+            // 
+            // BuildLabel
+            // 
+            this.BuildLabel.AutoSize = true;
+            this.BuildLabel.Location = new System.Drawing.Point(83, 27);
+            this.BuildLabel.Name = "BuildLabel";
+            this.BuildLabel.Size = new System.Drawing.Size(11, 12);
+            this.BuildLabel.TabIndex = 1;
+            this.BuildLabel.Text = "0";
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.Controls.Add(this.BuildLabel);
+            this.Controls.Add(this.BuildTagLabel);
+            this.Name = "MainForm";
+            this.Text = "WarBrief";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label BuildTagLabel;
+        private System.Windows.Forms.Label BuildLabel;
     }
 }
 
