@@ -18,9 +18,13 @@ namespace WarBrief.Utils
 
         private readonly Queue<string> fileQueue;
 
-        public FileObserver()
+        private Game game;
+
+        public FileObserver(Game game)
         {
             fileQueue = new Queue<string>();
+
+            this.game = game;
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -73,6 +77,14 @@ namespace WarBrief.Utils
             {
                 OnPlayerChange(e.FullPath);
             }
+            else if (e.Name.StartsWith("enemy"))
+            {
+                OnChangeOpponent(e.FullPath);
+            }
+            else if (e.Name.StartsWith("ribbon"))
+            {
+                OnChangeRibbon(e.FullPath);
+            }
         }
 
         private void OnPlayerChange(string path)
@@ -81,19 +93,37 @@ namespace WarBrief.Utils
 
             string data = GetJsonString(path);
             Player player = JsonSerializer.Deserialize<Player>(data);
-            Console.WriteLine($"FileObserver.Player: {player.Health}");
+            Console.WriteLine($"FileObserver.Player: {player.Id}");
 
             fileQueue.Dequeue();
+
+            game.UpdatePlayer(player);
         }
 
         private void OnChangeOpponent(string path)
         {
-            
+            fileQueue.Enqueue(path);
+
+            string data = GetJsonString(path);
+            Player opponent = JsonSerializer.Deserialize<Player>(data);
+            Console.WriteLine($"FileObserver.Opponent: {opponent.Id}");
+
+            fileQueue.Dequeue();
+
+            game.UpdateOpponent(opponent);
         }
 
         private void OnChangeRibbon(string path)
         {
+            fileQueue.Enqueue(path);
 
+            string data = GetJsonString(path);
+            Ribbon ribbon = JsonSerializer.Deserialize<Ribbon>(data);
+            Console.WriteLine($"FileObserver.Ribbon: {ribbon.Ids.Count}");
+
+            fileQueue.Dequeue();
+
+            game.EnqueueRibbon(ribbon);
         }
 
         private string GetJsonString(string path)

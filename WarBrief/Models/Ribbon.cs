@@ -8,6 +8,6 @@ namespace WarBrief.Models
 {
     class Ribbon
     {
-        public uint Id { get; set; }
+        public List<uint> Ids { get; set; }
     }
 }
